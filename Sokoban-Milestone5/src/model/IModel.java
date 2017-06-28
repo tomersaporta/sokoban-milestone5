@@ -16,5 +16,9 @@ public interface IModel {
 	public void dbQuery(String params);
 	public void addUser(String userName);
 	public void addRecord(String recordValues);
-
+	
+	public void restart();
+	public void getHint();
+	public void getSolution();
+	
 }

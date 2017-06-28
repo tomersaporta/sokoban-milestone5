@@ -5,8 +5,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -223,5 +226,63 @@ public class MyModel extends Observable implements IModel {
 		String recordJson=this.json.toJson(record);
 		
 		this.modelClient.createServerConnection(command, recordJson);
+	}
+
+	@Override
+	public void restart() {
+		CompressedLevel c=new CompressedLevel(this.theLevel.getLevelID(), this.theLevel.getInitBoard());
+		setTheLevel(c.decompressLevel());
+		setChanged();
+		notifyObservers("changed");
+	}
+
+	@Override
+	public void getHint() {
+		
+	}
+
+	@Override
+	public void getSolution() {
+		Commands command = Commands.GET_SOLUTION;
+		CompressedLevel cl=new CompressedLevel(theLevel.getLevelID(), theLevel.getLevelBored());
+		String levelJson=json.toJson(cl);
+		String solJson=modelClient.createServerConnection(command, levelJson);
+		String sol=this.json.fromJson(solJson, String.class);
+		
+		
+		List<String> solution=decompressedSolution(sol);
+		Timer timer=new Timer();
+		timer.scheduleAtFixedRate(new TimerTask() {
+			
+			@Override
+			public void run() {
+				if(!solution.isEmpty()){
+					setChanged();
+					notifyObservers(solution.get(0));
+					solution.remove(0);
+				}
+			}
+		}, 0,500);
+	}
+	
+	private List<String> decompressedSolution(String sol){
+		List<String> solution=new ArrayList<>();
+		
+		StringBuilder sb=new StringBuilder(sol);
+		for(int i=0;i<sb.length();i++){
+			switch(sb.charAt(i)){
+			case 'r': solution.add("Move right");
+					  break;
+			case 'l': solution.add("Move left");
+			  		  break;
+			case 'u': solution.add("Move up");
+	  		          break;
+			case 'd': solution.add("Move down");
+	  		   		  break;
+			}
+		}
+		return solution;
+		
+		
 	}
 }

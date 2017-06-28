@@ -77,6 +77,8 @@ public class MyTextLevelLoader extends CommonLevelLoader implements LevelLoader 
 				}
 			}
 		}
+		
+		newLevel.setInitBoard(newLevel.getLevelBored());
 			
 		return newLevel;
 	}

@@ -14,8 +14,10 @@ import controller.commands.ICommand;
 import controller.commands.LoadLevelCommand;
 import controller.commands.MoveCommand;
 import controller.commands.QueryCommand;
+import controller.commands.RestartCommand;
 import controller.commands.SaveLevelCommand;
 import controller.commands.ShowRecordsCommand;
+import controller.commands.SolveCommand;
 import controller.server.MyServer;
 import controller.server.SokobanClientHandler;
 import javafx.beans.property.SimpleStringProperty;
@@ -102,6 +104,8 @@ public class SokobanController implements Observer{
 		this.commandsCreator.put("SHOWQUERYRESULTS", new ShowRecordsCommand(this.ui, this.model) );
 		this.commandsCreator.put("ADDUSER", new AddUserCommand(this.model));
 		this.commandsCreator.put("ADDRECORD", new AddRecordCommand(this.model));
+		this.commandsCreator.put("RESTART", new RestartCommand(this.model));
+		this.commandsCreator.put("SOLVE", new SolveCommand(this.model));
 	}
 	
 	private String[] objectToStringArray(Object obj){

@@ -16,3 +16,8 @@
 	-fx-background-image: url("../../resources/elements/bbb2.jpg");
 	-fx-background-size: 160.0% 	
 }
+
+.button
+{
+	-fx-background-color: white 
+}

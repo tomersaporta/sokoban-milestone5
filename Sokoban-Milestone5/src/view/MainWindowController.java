@@ -57,6 +57,9 @@ public class MainWindowController extends Observable implements Initializable, I
 	@FXML
 	private Text countSteps;
 
+	//
+	private boolean isSolved;
+	
 	// Timer
 	@FXML
 	private Text timerText;
@@ -96,7 +99,7 @@ public class MainWindowController extends Observable implements Initializable, I
 		this.minCount = 0;
 		this.loadFromGui = false;
 		this.isLevelCompleted=false;
-
+		this.isSolved=false;
 		this.musicFile = "./resources/music/song1.mp3";
 		this.sound = new Media(new File(musicFile).toURI().toString());
 		this.mediaPlayer = new MediaPlayer(sound);
@@ -256,8 +259,11 @@ public class MainWindowController extends Observable implements Initializable, I
 	}
 
 	public void finishLevel() {
-		if(this.isLevelCompleted == true)
+		if(this.isLevelCompleted == true || this.isSolved == true){
+			stopTimer();
 			return;
+		}
+			
 		Platform.runLater(new Runnable() {
 
 			@Override
@@ -499,5 +505,21 @@ public class MainWindowController extends Observable implements Initializable, I
 	@Override
 	public void showRecords(List<Record> records) {
 		this.recordsWindow.showRecordsTable(records,this.secondStage);
+	}
+	
+	public void restart(){
+		this.isSolved=false;
+		stopTimer();
+		setChanged();
+		notifyObservers("restart");
+		initTimer(0, 0);
+	}
+	
+	public void solveLevel(){
+		this.isSolved=true;
+		stopTimer();
+		setChanged();
+		notifyObservers("solve");
+		initTimer(0, 0);
 	}
 }
