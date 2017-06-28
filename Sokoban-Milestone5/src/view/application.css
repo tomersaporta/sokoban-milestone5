@@ -1,0 +1,18 @@
+.status
+{
+	-fx-font-size: 20;
+	-fx-font-weight: bold;
+	-fx-text-alignment: center;
+}
+
+.header
+{
+	-fx-background-color:  #01A9DB;
+	/*-fx-background-image: url("../../resources/elements/bbb.jpg");*/
+	-fx-background-size: 160.0% 
+}
+.records
+{
+	-fx-background-image: url("../../resources/elements/bbb2.jpg");
+	-fx-background-size: 160.0% 	
+}
