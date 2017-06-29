@@ -259,7 +259,7 @@ public class MainWindowController extends Observable implements Initializable, I
 	}
 
 	public void finishLevel() {
-		if(this.isLevelCompleted == true || this.isSolved == true){
+		if(this.isLevelCompleted == true && this.isSolved == true){
 			stopTimer();
 			return;
 		}
@@ -268,6 +268,8 @@ public class MainWindowController extends Observable implements Initializable, I
 
 			@Override
 			public void run() {
+				isLevelCompleted = true;
+				isSolved=true;
 				Alert alert = new Alert(AlertType.CONFIRMATION);
 				alert.setTitle("Finish Level");
 				alert.setHeaderText("Congratulations!!!");
@@ -285,8 +287,6 @@ public class MainWindowController extends Observable implements Initializable, I
 				Optional<ButtonType> firstResult = alert.showAndWait();
 
 				if (firstResult.get() == ButtonType.OK) {
-					isLevelCompleted = true;
-					
 					// Create the custom dialog
 					Dialog<Pair<String, String>> dialog = new Dialog<>();
 					dialog.setTitle("Account Dialog");
@@ -509,6 +509,7 @@ public class MainWindowController extends Observable implements Initializable, I
 	
 	public void restart(){
 		this.isSolved=false;
+		this.isLevelCompleted=false;
 		stopTimer();
 		setChanged();
 		notifyObservers("restart");
@@ -518,6 +519,7 @@ public class MainWindowController extends Observable implements Initializable, I
 	public void solveLevel(){
 		restart();
 		this.isSolved=true;
+		this.isLevelCompleted=true;
 		stopTimer();
 		setChanged();
 		notifyObservers("solve");
