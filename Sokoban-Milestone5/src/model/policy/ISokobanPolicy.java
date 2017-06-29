@@ -9,5 +9,5 @@ import model.policy.moveType.IMoveType;
  */
 public interface ISokobanPolicy {
 	
-	public void checkPolicy(Player p, IMoveType moveType);
+	public boolean checkPolicy(Player p, IMoveType moveType);
 }

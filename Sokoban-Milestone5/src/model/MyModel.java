@@ -40,6 +40,8 @@ public class MyModel extends Observable implements IModel {
 	int serverPort;
 	private Gson json;
 	private ModelClient modelClient;
+	private List<String> hintSolution;
+	private boolean isOnHintPath;
 	
 	//DB
 	List<Record> recordes;
@@ -54,7 +56,8 @@ public class MyModel extends Observable implements IModel {
 		GsonBuilder jsonBuilder = new GsonBuilder();
 		this.json = jsonBuilder.create();
 		this.modelClient=new ModelClient(this.serverIp, this.serverPort);
-		
+		this.hintSolution=new ArrayList<>();
+		this.isOnHintPath=false;
 	}
 	
 	public Level getTheLevel() {
@@ -168,9 +171,18 @@ public class MyModel extends Observable implements IModel {
 			return;
 		}
 		
-		policy.checkPolicy(this.theLevel.getListPlayer().get(0), moveType);
-		setChanged();
-		notifyObservers("changed");
+		if(policy.checkPolicy(this.theLevel.getListPlayer().get(0), moveType)){
+			setChanged();
+			notifyObservers("changed");
+			if(!this.hintSolution.isEmpty()){
+				if(!(moveInput.toUpperCase().equals(this.hintSolution.get(0))))
+					this.isOnHintPath=false;
+				else
+					this.hintSolution.remove(0);
+			}
+			
+		}
+		
 	}
 
 	@Override
@@ -237,11 +249,6 @@ public class MyModel extends Observable implements IModel {
 	}
 
 	@Override
-	public void getHint() {
-		
-	}
-
-	@Override
 	public void getSolution() {
 		Commands command = Commands.GET_SOLUTION;
 		CompressedLevel cl=new CompressedLevel(theLevel.getLevelID(), theLevel.getLevelBored());
@@ -282,6 +289,38 @@ public class MyModel extends Observable implements IModel {
 			}
 		}
 		return solution;
+	}
+	
+	@Override
+	public void getHint() {
+		if(!this.isOnHintPath){
+			Commands command = Commands.GET_HINT;
+			CompressedLevel cl=new CompressedLevel(theLevel.getLevelID(), theLevel.getLevelBored());
+			String levelJson=json.toJson(cl);
+			
+			String solJson=modelClient.createServerConnection(command, levelJson);
+			String sol=this.json.fromJson(solJson, String.class);
+			
+			System.out.println("THE SOL: "+sol);
+
+			this.hintSolution=decompressedSolution(sol);
+			
+			if(!this.hintSolution.isEmpty()){
+				setChanged();
+				notifyObservers(this.hintSolution.get(0));
+				this.hintSolution.remove(0);
+				this.isOnHintPath=true;
+			}
+			
+		}
+		else{
+			if(!this.hintSolution.isEmpty()){
+				setChanged();
+				notifyObservers(this.hintSolution.get(0));
+				this.hintSolution.remove(0);
+			}
+			
+		}
 		
 		
 	}

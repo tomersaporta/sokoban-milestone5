@@ -23,7 +23,7 @@ public class Main extends Application {
 		try {
 			//BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
 			String ip="127.0.0.1";
-			int sPort=8888;
+			int sPort=9999;
 			
 			FXMLLoader loader=new FXMLLoader(getClass().getResource("MainWindow.fxml"));
 			BorderPane root = (BorderPane)loader.load();

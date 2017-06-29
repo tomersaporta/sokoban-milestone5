@@ -10,6 +10,7 @@ import controller.commands.DisplayCLICommand;
 import controller.commands.DisplayGUICommand;
 import controller.commands.ErrorCommand;
 import controller.commands.ExitCommand;
+import controller.commands.HintCommand;
 import controller.commands.ICommand;
 import controller.commands.LoadLevelCommand;
 import controller.commands.MoveCommand;
@@ -106,6 +107,7 @@ public class SokobanController implements Observer{
 		this.commandsCreator.put("ADDRECORD", new AddRecordCommand(this.model));
 		this.commandsCreator.put("RESTART", new RestartCommand(this.model));
 		this.commandsCreator.put("SOLVE", new SolveCommand(this.model));
+		this.commandsCreator.put("HINT", new HintCommand(this.model));
 	}
 	
 	private String[] objectToStringArray(Object obj){

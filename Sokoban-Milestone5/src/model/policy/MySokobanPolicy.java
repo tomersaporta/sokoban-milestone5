@@ -26,7 +26,7 @@ public class MySokobanPolicy extends GeneralSokobanPolicy {
 	 * the method check if the actor can move according to the moveType
 	 */
 	@Override
-	public void checkPolicy(Player player, IMoveType moveType) {
+	public boolean checkPolicy(Player player, IMoveType moveType) {
 		
 		GeneralElement elementInNextPosition=null;
 		GeneralElement elementInBoxNextPosition=null;
@@ -36,11 +36,14 @@ public class MySokobanPolicy extends GeneralSokobanPolicy {
 		
 		if(getLevel().isValidPosition(nextPosition))
 			elementInNextPosition=getLevel().getElementInPosition(nextPosition);
-		else return;
+		else return false;
 		
 		if(elementInNextPosition instanceof unmovable){
-			if(((unmovable) elementInNextPosition).isStepable())
+			if(((unmovable) elementInNextPosition).isStepable()){
 				getLevel().upDateLevelPlayerMoves(player, nextPosition);
+				return true;
+			}
+				
 		}
 		
 		else if (elementInNextPosition instanceof Box)
@@ -49,12 +52,14 @@ public class MySokobanPolicy extends GeneralSokobanPolicy {
 			if(getLevel().isValidPosition(boxNextPosition))
 				elementInBoxNextPosition=getLevel().getElementInPosition(boxNextPosition);
 			
-			else return;
+			else return false;
 				
 			if(elementInBoxNextPosition instanceof Floor){
 				getLevel().upDateLevelPlayerBoxMoves(player,(Box)elementInNextPosition, boxNextPosition);
+				return true;
 			}
 		}
+		return false;
 	
 	}
 

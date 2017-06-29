@@ -516,10 +516,16 @@ public class MainWindowController extends Observable implements Initializable, I
 	}
 	
 	public void solveLevel(){
+		restart();
 		this.isSolved=true;
 		stopTimer();
 		setChanged();
 		notifyObservers("solve");
 		initTimer(0, 0);
+	}
+	
+	public void getHint(){
+		setChanged();
+		notifyObservers("hint");
 	}
 }

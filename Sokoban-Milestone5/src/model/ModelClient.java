@@ -46,6 +46,7 @@ public class ModelClient {
 			switch (command) {
 			case DB_QUERY:
 			case GET_SOLUTION:
+			case GET_HINT:
 				String result=in.readLine();
 				return result;
 			default:
