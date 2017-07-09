@@ -10,6 +10,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
+/**
+ *
+ * Sokoban Canvas
+ * Drawing the level board
+ */
 public class SokobanDisplayer extends Canvas{
 	
 	char[][] levelData;
@@ -92,6 +97,10 @@ public class SokobanDisplayer extends Canvas{
 		this.backgrounFileName.set(backgrounFileName);;
 	}
 
+	/**
+	 * 
+	 * Drawing the initial level board
+	 */
 	public void redrawStart(){
 		
 		double W= getWidth();
@@ -115,7 +124,9 @@ public class SokobanDisplayer extends Canvas{
 	}
 	
 	
-	
+	/**
+	 * Drawing the level board
+	 */
 	public void redraw(){
 		
 		if(this.levelData!=null){

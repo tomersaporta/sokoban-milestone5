@@ -2,7 +2,10 @@ package controller.commands;
 
 import model.IModel;
 import view.IView;
-
+/**
+ * <h1>DisplayGUICommand</h1>
+ * activate the displayGui function in the view using the updated Level from the model
+ */
 public class DisplayGUICommand extends Command {
 
 	private IView view;

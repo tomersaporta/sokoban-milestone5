@@ -1,7 +1,11 @@
 package view;
 
 import javafx.scene.input.KeyCode;
-
+/**
+ * <h1>ViewSettings</h1>
+ * Defined the view settings
+ *
+ */
 public class ViewSettings {
 	
 	private KeyCode moveUp;

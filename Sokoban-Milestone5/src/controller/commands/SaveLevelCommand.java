@@ -4,7 +4,7 @@ import model.IModel;
 
 /**
  * <h1>Save Level Command<h1>
- * activate the SaveLevel in the model
+ * activate the SaveLevel method in the model
  */
 public class SaveLevelCommand extends Command {
 

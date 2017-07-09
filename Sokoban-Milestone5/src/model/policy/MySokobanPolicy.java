@@ -23,7 +23,8 @@ public class MySokobanPolicy extends GeneralSokobanPolicy {
 		super(level);
 	}
 	/**
-	 * the method check if the actor can move according to the moveType
+	 * The method check if the actor can move according to the moveType
+	 * If the action is legal, it update the level in accordance
 	 */
 	@Override
 	public boolean checkPolicy(Player player, IMoveType moveType) {

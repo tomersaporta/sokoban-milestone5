@@ -1,14 +1,14 @@
 package view;
 
-import java.sql.Time;
-import java.util.List;
 
-import db.Record;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
+/**
+ * <h1>RecordRow</h1>
+ * Defines the record object who can be showed in the records table
+ *
+ */
 public class RecordRow {
 
 	private final SimpleIntegerProperty recordId;

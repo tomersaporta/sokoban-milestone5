@@ -23,7 +23,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
+/**
+ * <h1>RecordsWindowController</h1>
+ * Manage the Records window of Sokoban game
+ */
 public class RecordsWindowController extends Observable implements Initializable{
 	
 	@FXML
@@ -88,6 +91,11 @@ public class RecordsWindowController extends Observable implements Initializable
 		this.currentLevelID = currentLevelID;
 	}
 
+	/**
+	 * Presenting the records in the records table
+	 * @param records- The list of records
+	 * @param stage
+	 */
 	@SuppressWarnings("unchecked")
 	public void showRecordsTable(List<Record> records, Stage stage){
 		
@@ -138,10 +146,10 @@ public class RecordsWindowController extends Observable implements Initializable
 		exitStage();
 	}
 
+	/**
+	 * Searching query in the DB
+	 */
 	public void search(){
-		/*if(this.currentLevelID!=null){
-			this.levelParam=this.currentLevelID;
-		}*/
 		setChanged();
 		System.out.println("Query "+this.levelParam+" "+this.userParam+" "+this.orderByParam);
 		notifyObservers("Query "+this.levelParam+" "+this.userParam+" "+this.orderByParam);
@@ -154,7 +162,6 @@ public class RecordsWindowController extends Observable implements Initializable
 	}
 	
 	public void orderParams(){
-		//Tomer said:
 		RadioButton rb=(RadioButton)group.getSelectedToggle();
 		this.orderByParam=rb.getText();
 	}
@@ -164,7 +171,10 @@ public class RecordsWindowController extends Observable implements Initializable
 		
 	}
 	
-	//convert records to recordRow
+	/**
+	 * Converting records to recordRow
+	 * @param records- List of records
+	 */
 	public void convertRecordToRecordRow(List<Record> records){
 		
 		this.data=FXCollections.observableArrayList();
@@ -173,11 +183,19 @@ public class RecordsWindowController extends Observable implements Initializable
 		}
 	}
 	
+	/**
+	 * 
+	 * Refresing the table - returns the whole rows from the db
+	 */
 	public void refresh(){
 		initParams();
 		search();
 	}
 	
+	/**
+	 * 
+	 * Exiting the window correctly
+	 */
 	public void exitStage() {
 		this.stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 

@@ -3,6 +3,11 @@ package controller.commands;
 import model.IModel;
 import view.IView;
 
+
+/**
+ * <h1>ShowRecordsCommand<h1>
+ * activate the showRecords method in the view
+ */
 public class ShowRecordsCommand extends Command {
 
 	private IView view;

@@ -47,7 +47,10 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Pair;
-
+/**
+ * <h1>MainWindowController</h1>
+ * Manage the GUI of Sokoban game
+ */
 public class MainWindowController extends Observable implements Initializable, IView,Observer {
 
 	@FXML
@@ -107,7 +110,10 @@ public class MainWindowController extends Observable implements Initializable, I
 		this.currentLevelId="";
 	}
 
-	
+	/**
+	 * Set the Records window controller
+	 * @param recordsWindow
+	 */
 	public void setRecordsWindow(RecordsWindowController recordsWindow){
 		this.recordsWindow=recordsWindow;
 	}
@@ -154,6 +160,11 @@ public class MainWindowController extends Observable implements Initializable, I
 
 	}
 
+	/**
+	 * Initialize the timer to 00:00
+	 * @param sCount - The seconds
+	 * @param mCount - The minutes
+	 */
 	private void initTimer(int sCount, int mCount) {
 
 		this.timerCount = new SimpleStringProperty();
@@ -184,6 +195,9 @@ public class MainWindowController extends Observable implements Initializable, I
 
 	}
 
+	/**
+	 * Stopping the timer
+	 */
 	private void stopTimer() {
 
 		if (timer != null)
@@ -191,15 +205,18 @@ public class MainWindowController extends Observable implements Initializable, I
 
 	}
 
-	// bind the steps by string property
+	/**
+	 * Binding the steps (string property) with the string property in the controller
+	 */
 	@Override
 	public void createBindSteps(StringProperty Counter) {
 		this.countSteps.textProperty().bind(Counter);
 	}
 
-	// GUI CODE
+	/**
+	 * Loading level from a file
+	 */
 	public void openFile() {
-
 		
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Open level file");
@@ -222,6 +239,9 @@ public class MainWindowController extends Observable implements Initializable, I
 
 	}
 
+	/**
+	 * Saving the current level to a file
+	 */
 	public void saveFile() {
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Save level file");
@@ -240,6 +260,9 @@ public class MainWindowController extends Observable implements Initializable, I
 
 	}
 
+	/**
+	 * Showing the updated current Level
+	 */
 	@Override
 	public void displayGUI(Level level) {
 
@@ -258,6 +281,10 @@ public class MainWindowController extends Observable implements Initializable, I
 		}
 	}
 
+	/**
+	 * Checking if the level completed
+	 * If the level completed -this method stops the timer and offers the user to join to the records table
+	 */
 	public void finishLevel() {
 		if(this.isLevelCompleted == true && this.isSolved == true){
 			stopTimer();
@@ -279,7 +306,6 @@ public class MainWindowController extends Observable implements Initializable, I
 					imagVew.setFitHeight(80);
 					alert.setGraphic(imagVew);
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				alert.setContentText("Steps: " + countSteps.getText() + "\n Time: " + timerText.getText()
@@ -358,7 +384,11 @@ public class MainWindowController extends Observable implements Initializable, I
 		stopTimer();
 	}
 
-	// load XML file
+	/**
+	 * load XML file who defines the view settings 
+	 * @param filepath- the location of the xml file
+	 * @return an ViewSettings object
+	 */
 	private ViewSettings initViewSettings(String filepath) {
 
 		XMLDecoder decoder;
@@ -368,14 +398,17 @@ public class MainWindowController extends Observable implements Initializable, I
 			vs = (ViewSettings) decoder.readObject();
 			decoder.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		return vs;
 	}
 
-	// exit window
+	
+	/**
+	 * 
+	 * Exiting the window correctly
+	 */
 	public void exitWindow() {
 		stopTimer();
 		Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -400,7 +433,9 @@ public class MainWindowController extends Observable implements Initializable, I
 
 	}
 
-	// close the main window with the redX
+	/**
+	 *  Closing correctly the main window with redX
+	 */
 	@Override
 	public void exitPrimaryStage() {
 		this.primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -413,6 +448,9 @@ public class MainWindowController extends Observable implements Initializable, I
 		});
 	}
 	
+	/**
+	 * Openning the records window
+	 */
 	public void openRecordsWin(){
 		if(this.currentLevelId!="")
 			this.recordsWindow.setLevelParam(this.currentLevelId);
@@ -422,7 +460,9 @@ public class MainWindowController extends Observable implements Initializable, I
 	}
 	
 
-	// set the focus on the sokobanDisplayer
+	/**
+	 * Set the focus on the sokobanDisplayer
+	 */
 	private void setFocus() {
 		sokobanDisplayer.focusedProperty().addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) {
@@ -435,6 +475,10 @@ public class MainWindowController extends Observable implements Initializable, I
 		});
 	}
 
+	
+	/**
+	 * Display errors in the button of the window
+	 */
 	@Override
 	public void displayError(String error) {
 		Platform.runLater(new Runnable() {
@@ -447,19 +491,32 @@ public class MainWindowController extends Observable implements Initializable, I
 		});
 	}
 
-	// music handle
+	
+	/**
+	 * Playing the music
+	 */
 	private void playSound() {
 		mediaPlayer.play();
 	}
 
+	/**
+	 * Stoping the music
+	 */
 	private void stopSound() {
 		mediaPlayer.stop();
 	}
 
+	/**
+	 * Pausing the music
+	 */
 	private void pauseSound() {
 		mediaPlayer.pause();
 	}
 
+	
+	/**
+	 * Controlling in the music of the game
+	 */
 	public void startStopMusic() {
 		this.musicButton.setText("");
 		if (this.isMusicOn) {
@@ -502,11 +559,18 @@ public class MainWindowController extends Observable implements Initializable, I
 	}
 
 
+	/**
+	 * Showing the Records window
+	 */
 	@Override
 	public void showRecords(List<Record> records) {
 		this.recordsWindow.showRecordsTable(records,this.secondStage);
 	}
 	
+	/**
+	 * 
+	 * Restarting the current level
+	 */
 	public void restart(){
 		this.isSolved=false;
 		this.isLevelCompleted=false;
@@ -516,6 +580,10 @@ public class MainWindowController extends Observable implements Initializable, I
 		initTimer(0, 0);
 	}
 	
+	/**
+	 * 
+	 * Asking for a solution to the current level
+	 */
 	public void solveLevel(){
 		restart();
 		this.isSolved=true;
@@ -526,6 +594,9 @@ public class MainWindowController extends Observable implements Initializable, I
 		initTimer(0, 0);
 	}
 	
+	/**
+	 * Asking for a hint to the current level
+	 */
 	public void getHint(){
 		setChanged();
 		notifyObservers("hint");

@@ -4,7 +4,11 @@ import java.util.List;
 
 import db.Level;
 import db.Record;
-
+/**
+ * <h1>IModel</h1>
+ * Defines the behavior of the model
+ *
+ */
 public interface IModel {
 	
 	public Level getCurrentLevel();

@@ -6,7 +6,10 @@ import db.Level;
 import db.Record;
 import javafx.beans.property.StringProperty;
 import javafx.stage.Stage;
-
+/**
+ *<h1>IView</h1> 
+ *Defines the behavior of the GUI
+ */
 public interface IView {
 	
 	public void displayGUI(Level level);

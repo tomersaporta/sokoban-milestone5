@@ -4,7 +4,7 @@ import model.IModel;
 
 /**
  * <h1>LoadLevelCommand</h1>
- *activate the LoadLevel in the model
+ *activate the LoadLevel method in the model
  */
 public class LoadLevelCommand extends Command {
 

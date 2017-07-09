@@ -5,7 +5,7 @@ import model.IModel;
 
 /**
  * <h1>MoveCommand</h1>
- * activate the move in the model
+ * activate the move method in the model
  */
 
 public class MoveCommand extends Command {

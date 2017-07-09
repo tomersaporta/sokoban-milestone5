@@ -11,7 +11,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import commands.Commands;
-
+/**
+ * Manage the requests to the Sokoban server
+ *
+ */
 public class ModelClient {
 
 	private String serverIp;
@@ -25,6 +28,12 @@ public class ModelClient {
 		this.serverPort=serverPort;	
 	}
 
+	/**
+	 * Create connection with the server, requesting the service and waiting for response
+	 * @param command -The command we want from the server(According to the protocol)
+	 * @param params - The parameters that the command needs in order to preform his task 
+	 * @return The result from the server
+	 */
 	public String createServerConnection(Commands command,String params) {
 		Socket theServer = null;
 		BufferedReader in = null;
@@ -36,6 +45,11 @@ public class ModelClient {
 			in = new BufferedReader(new InputStreamReader(theServer.getInputStream()));
 			out = new PrintWriter(theServer.getOutputStream());
 
+			String idJson = this.json.toJson(command.toString());
+			out.println(idJson);
+			out.flush();
+			
+			
 			String comJson = this.json.toJson(command);
 			out.println(comJson);
 			out.flush();

@@ -29,7 +29,11 @@ import model.policy.ISokobanPolicy;
 import model.policy.MySokobanPolicy;
 import model.policy.moveType.IMoveType;
 import model.policy.moveType.MoveTypeFactory;
-
+/**
+ *<h1>MyModel</h1> 
+ *Implements the methods IModel defines
+ *The specific model to our Sokoban game 
+ */
 public class MyModel extends Observable implements IModel {
 	
 	Level theLevel;
@@ -64,15 +68,28 @@ public class MyModel extends Observable implements IModel {
 		return theLevel;
 	}
 
+	/**
+	 * 
+	 * @param theLevel
+	 */
 	public void setTheLevel(Level theLevel) {
 		this.theLevel = theLevel;
 	}
 
 	@Override
+	/**
+	 * Return the current Level
+	 * @return - the current Level
+	 */
 	public Level getCurrentLevel() {
 		return this.theLevel;
 	}
 
+
+	/**
+	 * Load level from the filepath
+	 * @param filepath- path to the location of the file we want to load
+	 */
 	@Override
 	public void LoadLevel(String filepath) {
 
@@ -120,6 +137,11 @@ public class MyModel extends Observable implements IModel {
 		
 	}
 
+	
+	/**
+	 * save level to the filepath
+	 * @param filepath- path to the location of the file we want to save
+	 */
 	@Override
 	public void SaveLevel(String filepath) {
 		
@@ -152,6 +174,12 @@ public class MyModel extends Observable implements IModel {
 		t.start();
 	}
 
+	
+	/**
+	 * Move the player according to the moveInput 
+	 * The action fulfillment if the move is legal(according to the policy)
+	 * @param moveImput- the type of the move- up/down/left/right
+	 */
 	@Override
 	public void move(String moveInput) {
 		
@@ -185,6 +213,9 @@ public class MyModel extends Observable implements IModel {
 		
 	}
 
+	/**
+	 * Returns the steps that the player did in the current level
+	 */
 	@Override
 	public int getSteps() {
 		if(this.theLevel!=null)
@@ -192,11 +223,17 @@ public class MyModel extends Observable implements IModel {
 		return 0;
 	}
 
+	/**
+	 * Returns the list of the records- according to the current query
+	 */
 	@Override
 	public List<Record> getRecordsList() {
 		return this.recordes;
 	}
 
+	/**
+	 * Ask the Sokoban server to  a query according to the params 
+	 */
 	@Override
 	public void dbQuery(String params) {
 		//creating the QueryParams from the params
@@ -215,6 +252,10 @@ public class MyModel extends Observable implements IModel {
 		notifyObservers("showQueryResults");
 	}
 
+	
+	/**
+	 * Ask the Sokoban server to add a new user to the DB
+	 */
 	@Override
 	public void addUser(String userName) {
 		
@@ -226,7 +267,11 @@ public class MyModel extends Observable implements IModel {
 		this.modelClient.createServerConnection(command, userJson);
 		
 	}
-
+	
+	
+	/**
+	 * Ask the Sokoban server to add a new record to the DB
+	 */
 	@Override
 	public void addRecord(String recordValues) {
 		
@@ -240,6 +285,9 @@ public class MyModel extends Observable implements IModel {
 		this.modelClient.createServerConnection(command, recordJson);
 	}
 
+	/**
+	 * Restart the current Level
+	 */
 	@Override
 	public void restart() {
 		CompressedLevel c=new CompressedLevel(this.theLevel.getLevelID(), this.theLevel.getInitBoard());
@@ -248,6 +296,9 @@ public class MyModel extends Observable implements IModel {
 		notifyObservers("changed");
 	}
 
+	/**
+	 * Ask the Sokoban server for solution to the current Level
+	 */
 	@Override
 	public void getSolution() {
 		Commands command = Commands.GET_SOLUTION;
@@ -291,6 +342,9 @@ public class MyModel extends Observable implements IModel {
 		return solution;
 	}
 	
+	/**
+	 * Ask the Sokoban server for a hint to the current Level
+	 */
 	@Override
 	public void getHint() {
 		if(!this.isOnHintPath){

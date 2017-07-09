@@ -5,7 +5,11 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import controller.commands.ICommand;
-
+/**
+ * <h1>Controller</h1>
+ * General controller who manage commands in a blocking queue
+ *
+ */
 public class Controller {
 	
 	private BlockingQueue<ICommand> commandsQueue;
@@ -27,7 +31,10 @@ public class Controller {
 	public void insertCommand(ICommand command) throws InterruptedException{
 		this.commandsQueue.put(command);
 	}
-	
+	/**
+	 * Poll(blocking call) the commands from the queue and execute them.
+	 * Runs in a different thread
+	 */
 	public void start(){
 		
 		Thread t = new Thread(new Runnable() {
@@ -50,6 +57,9 @@ public class Controller {
 		t.start();
 	}
 	
+	/**
+	 * Stops the thread who poll commands from the queue
+	 */
 	public void stop(){
 		this.stop=true;
 		System.out.println("Goodbye");

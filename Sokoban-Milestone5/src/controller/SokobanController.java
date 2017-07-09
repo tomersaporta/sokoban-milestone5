@@ -26,6 +26,10 @@ import javafx.beans.property.StringProperty;
 import model.IModel;
 import view.IView;
 
+/**
+ * <h1>SokobanController</h1>
+ * The specific controller to the Sokoban game
+ */
 public class SokobanController implements Observer{
 	
 	private IView ui;
@@ -91,6 +95,11 @@ public class SokobanController implements Observer{
 		this.controller = controller;
 	}
 
+	/**
+	 * 
+	 * Put the whole commands in the hash map who create the suitable command accroding to string
+	 * This method transfer the suitable parameters to the command(model/view)
+	 */
 	private void initcommandsCreator(){
 		
 		this.commandsCreator= new HashMap<String,ICommand>();
@@ -109,7 +118,11 @@ public class SokobanController implements Observer{
 		this.commandsCreator.put("SOLVE", new SolveCommand(this.model));
 		this.commandsCreator.put("HINT", new HintCommand(this.model));
 	}
-	
+	/**
+	 * Convert object to string array 
+	 * @param obj- the object to convert
+	 * @return string array
+	 */
 	private String[] objectToStringArray(Object obj){
 		
 		String [] result;
@@ -121,7 +134,12 @@ public class SokobanController implements Observer{
 		return result;
 	}
 	
+
 	@Override
+	/**
+	 * 
+	 * Insert the command into the queue of commands in the general controller
+	 */
 	public void update(Observable o, Object arg) {
 		
 		String[]params=objectToStringArray(arg);
